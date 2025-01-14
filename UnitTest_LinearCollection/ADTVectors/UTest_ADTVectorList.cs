@@ -72,8 +72,7 @@ namespace UnitTest_LinearCollection.Tests
         [Test]
         public void ToRetrieve() 
         {
-            _instanceList.toAdd(10);
-
+            AddItems(10);
             int result = 0;
             _instanceList.toRetrieve(0, ref result);
 
@@ -83,27 +82,22 @@ namespace UnitTest_LinearCollection.Tests
         [Test]
         public void ToRemoveByIdx()
         {
-            _instanceList.toAdd(10);
-            _instanceList.toAdd(15);
-            _instanceList.toAdd(20);
+            AddItems(10, 15, 20);
 
             int refResult = 0;
 
             _instanceList.toRemoveByPosition(0, ref refResult);
             Assert.AreEqual(10, refResult);
             Assert.AreEqual(2, _instanceList.attLength);
+
             _instanceList.toRemoveByPosition(1, ref refResult);
             Assert.AreEqual(1, _instanceList.attLength);
             Assert.AreEqual(20, refResult);
-
-
         }
         [Test]
         public void ToRemove()
         {
-            _instanceList.toAdd(10);
-            _instanceList.toAdd(12);
-            _instanceList.toAdd(13);
+            AddItems(10, 12, 13);
             
             _instanceList.toRemove(12);
             Assert.AreEqual(2, _instanceList.attLength);
