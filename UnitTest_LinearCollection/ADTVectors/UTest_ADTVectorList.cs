@@ -7,12 +7,16 @@ namespace UnitTest_LinearCollection.Tests
         private ADTVectorList<int> _instanceList;
 
         #region SetUp
+
         [SetUp]
         public void Setup()
         {
             _instanceList = new ADTVectorList<int>();
         }
+
         #endregion
+
+        #region Tests
         private void AddItems(params int[] items)
         {
             foreach (var item in items)
@@ -56,21 +60,20 @@ namespace UnitTest_LinearCollection.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceList.GoPrev());
         }
+
+        #region CRUDs
         [Test]
         public void ToAdd()
         {
-
             AddItems(10, 20, 30);
 
-            #region Asserts
             Assert.AreEqual(10, _instanceList.GoIndex(0));
             Assert.AreEqual(20, _instanceList.GoIndex(1));
             Assert.AreEqual(30, _instanceList.GoIndex(2));
             Assert.AreEqual(3, _instanceList.attLength);
-            #endregion
         }
         [Test]
-        public void ToRetrieve() 
+        public void ToRetrieve()
         {
             AddItems(10);
             int result = 0;
@@ -86,11 +89,11 @@ namespace UnitTest_LinearCollection.Tests
 
             int refResult = 0;
 
-            _instanceList.toRemoveByPosition(0, ref refResult);
+            _instanceList.toRemoveByIndex(0, ref refResult);
             Assert.AreEqual(10, refResult);
             Assert.AreEqual(2, _instanceList.attLength);
 
-            _instanceList.toRemoveByPosition(1, ref refResult);
+            _instanceList.toRemoveByIndex(1, ref refResult);
             Assert.AreEqual(1, _instanceList.attLength);
             Assert.AreEqual(20, refResult);
         }
@@ -98,7 +101,7 @@ namespace UnitTest_LinearCollection.Tests
         public void ToRemove()
         {
             AddItems(10, 12, 13);
-            
+
             _instanceList.toRemove(12);
             Assert.AreEqual(2, _instanceList.attLength);
             int resultGo = _instanceList.GoIndex(1);
@@ -123,11 +126,28 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(2, resultValue);
             Assert.AreEqual(1, _instanceList.attLength);
         }
+        #endregion
+
+        #region Exceptions
         [Test]
-        public void ArgumentOutOfRange()
+        public void ArgumentOutOfRangeException()
         {
             _instanceList.toAdd(10);
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceList.GoIndex(5));
         }
+        [Test]
+        public void LimitCapactyException()
+        {
+            ADTVectorList<int> _instanceListWithCapacity = new ADTVectorList<int>(2);
+
+            _instanceListWithCapacity.toAdd(10);
+            _instanceListWithCapacity.toAdd(20);
+
+            Assert.AreEqual(2, _instanceListWithCapacity.attLength);
+            Assert.Throws<ArgumentOutOfRangeException>(() => _instanceListWithCapacity.toAdd(30));
+        }  
+        #endregion
+
+        #endregion
     }
 }

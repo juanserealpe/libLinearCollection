@@ -57,7 +57,29 @@ namespace Collections.ADT
             }
             attArrayItems[prmPosition] = prmItem;
         }
-        protected virtual void toRemoveOn(T prmItem)
+        protected virtual void toRetrieveRef(int prmPosition, ref T prmItem)
+        {
+            ValidateRangePosition(prmPosition);
+            ValidateNotEmpty();
+            prmItem = this.attArrayItems[prmPosition];
+        }
+        #endregion
+
+        #region PublicMethods
+        public virtual void toRemoveByIndex(int prmPosition, ref T prmItem)
+        {
+            ValidateRangePosition(prmPosition);
+            ValidateNotEmpty();
+
+            prmItem = this.attArrayItems[prmPosition];
+
+            for (int varIdx = prmPosition; varIdx < this.attLength; varIdx++)
+                this.attArrayItems[varIdx] = this.attArrayItems[varIdx + 1];
+
+            this.attArrayItems[this.attLength - 1] = default(T);
+            this.attLength--;
+        }
+        public virtual void toRemove(T prmItem)
         {
             for (int varIdx = 0; varIdx < this.attLength; varIdx++)
             {
@@ -73,28 +95,6 @@ namespace Collections.ADT
                 }
             }
         }
-        protected virtual void toRemoveByIndex(int prmPosition, ref T prmItem)
-        {
-            ValidateRangePosition(prmPosition);
-            ValidateNotEmpty();
-
-            prmItem = this.attArrayItems[prmPosition];
-
-            for (int varIdx = prmPosition; varIdx < this.attLength; varIdx++)
-                this.attArrayItems[varIdx] = this.attArrayItems[varIdx + 1];
-
-            this.attArrayItems[this.attLength - 1] = default(T);
-            this.attLength--;
-        }
-        protected virtual void toRetrieveRef(int prmPosition, ref T prmItem)
-        {
-            ValidateRangePosition(prmPosition);
-            ValidateNotEmpty();
-            prmItem = this.attArrayItems[prmPosition];
-        }
-        #endregion
-
-        #region PublicMethods
         public virtual void toPrint()
         {
             ValidateNotEmpty();

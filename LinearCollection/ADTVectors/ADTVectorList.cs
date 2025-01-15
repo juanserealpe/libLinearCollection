@@ -18,8 +18,6 @@ namespace Collections.Vectors
 
         #region Methods
         public void toAdd(T prmItem) => toInsertOn(prmItem, this.attLength);
-        public void toRemove(T prmItem) => toRemoveOn(prmItem);
-        public void toRemoveByPosition(int prmPosition, ref T prmItem) => toRemoveByIndex(prmPosition, ref prmItem);
         public void toRetrieve(int prmPosition, ref T prmItem) => toRetrieveRef(prmPosition, ref prmItem); 
         public void toModify(int prmPosition, T prmItem) => toModifyOn(prmPosition, prmItem);
         #endregion
