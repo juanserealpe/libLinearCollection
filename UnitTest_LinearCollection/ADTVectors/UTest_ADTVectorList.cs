@@ -13,10 +13,6 @@ namespace UnitTest_LinearCollection.Tests
         {
             _instanceList = new ADTVectorList<int>();
         }
-
-        #endregion
-
-        #region Tests
         private void AddItems(params int[] items)
         {
             foreach (var item in items)
@@ -24,6 +20,11 @@ namespace UnitTest_LinearCollection.Tests
                 _instanceList.toAdd(item);
             }
         }
+        #endregion
+
+        #region Tests
+
+        #region Positioners
         [Test]
         public void Positioners()
         {
@@ -59,7 +60,8 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(10, resultGoPrev);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceList.GoPrev());
-        }
+        } 
+        #endregion
 
         #region CRUDs
         [Test]
@@ -126,6 +128,36 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(2, resultValue);
             Assert.AreEqual(1, _instanceList.attLength);
         }
+        #endregion
+
+        #region Utilities
+        [Test]
+        public void toCrearArray()
+        {
+            AddItems(10, 20, 30);
+            _instanceList.toClear();
+            Assert.AreEqual(0, _instanceList.attLength);
+        }
+        [Test]
+        public void toReverse()
+        {
+            AddItems(10, 20, 30);
+            _instanceList.toReverse();
+            Assert.AreEqual(30, _instanceList.GoIndex(0));
+            Assert.AreEqual(20, _instanceList.GoIndex(1));
+            Assert.AreEqual(10, _instanceList.GoIndex(2));
+        }
+        [Test]
+        public void toSort()
+        {
+            AddItems(30, 10, 20);
+            _instanceList.toSort();
+            Assert.AreEqual(10, _instanceList.GoIndex(0));
+            Assert.AreEqual(20, _instanceList.GoIndex(1));
+            Assert.AreEqual(30, _instanceList.GoIndex(2));
+        }
+
+
         #endregion
 
         #region Exceptions

@@ -12,8 +12,6 @@ namespace UnitTest_LinearCollection.Tests
         {
             _instanceList = new ADTVectorQueue<int>();
         }
-        #endregion
-
         private void toPushItems(params int[] items)
         {
             foreach (var item in items)
@@ -21,14 +19,17 @@ namespace UnitTest_LinearCollection.Tests
                 _instanceList.toPush(item);
             }
         }
+        #endregion
 
+        #region CRUDs
         [Test]
         public void toPush()
         {
-            toPushItems(10, 20, 30);
+            _instanceList.toPush(10);
+            _instanceList.toPush(20);
+            _instanceList.toPush(30);
             Assert.AreEqual(3, _instanceList.attLength);
         }
-
         [Test]
         public void toPeek()
         {
@@ -47,6 +48,35 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(10, refResult);
             Assert.AreEqual(2, _instanceList.attLength);
         }
+        #endregion
+
+        #region Utilities
+        [Test]
+        public void toCrearArray()
+        {
+            toPushItems(10, 20, 30);
+            _instanceList.toClear();
+            Assert.AreEqual(0, _instanceList.attLength);
+        }
+        [Test]
+        public void toReverse()
+        {
+            toPushItems(10, 20, 30);
+            _instanceList.toReverse();
+            Assert.AreEqual(30, _instanceList.GoIndex(0));
+            Assert.AreEqual(20, _instanceList.GoIndex(1));
+            Assert.AreEqual(10, _instanceList.GoIndex(2));
+        }
+        [Test]
+        public void toSort()
+        {
+            toPushItems(30, 10, 20);
+            _instanceList.toSort();
+            Assert.AreEqual(10, _instanceList.GoIndex(0));
+            Assert.AreEqual(20, _instanceList.GoIndex(1));
+            Assert.AreEqual(30, _instanceList.GoIndex(2));
+        }
+        #endregion
 
     }
 }
