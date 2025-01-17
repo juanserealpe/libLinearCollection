@@ -66,6 +66,8 @@ namespace UnitTest_LinearCollection.Tests
 
             IndexItem = _instanceLinkedList.GoIndex(9);
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceLinkedList.GoNext());
+            IndexItem = _instanceLinkedList.GoIndex(1);
+            Assert.AreEqual(2, IndexItem);
         }
         #endregion 
 

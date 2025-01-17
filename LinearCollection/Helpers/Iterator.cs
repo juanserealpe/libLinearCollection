@@ -57,10 +57,7 @@ namespace LinealCollection.Helpers
         public virtual T GoPrev()
         {
             ValidateNotEmpty();
-            if (attCurrentIndex-1 < 0)
-            {
-                throw new ArgumentOutOfRangeException("The position cannot be negative.");
-            }
+            ValidateRangePosition(this.attCurrentIndex);
             attCurrentIndex -= 1;
             return default(T);
         }

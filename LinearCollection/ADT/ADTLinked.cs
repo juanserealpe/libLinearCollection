@@ -167,7 +167,6 @@ namespace LinearCollection.ADT
             base.GoNext();
             this.attCurrentNode = attCurrentNode.attNextNode;
             this.attCurrentItem = this.attCurrentNode.attItem;
-            this.attCurrentIndex++;
             return attCurrentItem;
         }
         public override T GoPrev()
