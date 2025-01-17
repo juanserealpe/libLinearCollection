@@ -10,16 +10,13 @@ namespace LinearCollection.ADTLinked
 {
     public class ADTLinkedList<T> : ADTLinked<T>, iADTList<T> where T : IComparable<T>
     {
-        public void toAdd(T prmItem) => toInsertOn(prmItem, this.attLength);
+        public void toAdd(T prmItem) 
+            => toInsertOn(prmItem, this.attLength);
 
-        public void toModify(int prmPosition, T prmItem)
-        {
-            throw new NotImplementedException();
-        }
+        public void toModify(int prmPosition, T prmItem) 
+            => toModifyOn(prmPosition, prmItem);
 
-        public void toRetrieve(int prmPosition, ref T prmItem)
-        {
-            throw new NotImplementedException();
-        }
+        public void toRetrieve(int prmPosition, ref T prmItem) 
+            => toRetrieveRef(prmPosition, ref prmItem);
     }
 }

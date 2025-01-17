@@ -165,21 +165,18 @@ namespace Collections.ADT
         public override T GoFirst()
         {
             base.GoFirst();
-            this.attCurrentIndex = 0;
             this.attCurrentItem = this.attArrayItems[0];
             return this.attCurrentItem;
         }
         public override T GoIndex(int prmPosition)
         {
             base.GoIndex(prmPosition);
-            this.attCurrentIndex = prmPosition;
             this.attCurrentItem = this.attArrayItems[prmPosition];
             return this.attCurrentItem;
         }
         public override T GoLast()
         {
             base.GoLast();
-            this.attCurrentIndex = attLength - 1;
             this.attCurrentItem = this.attArrayItems[attLength - 1];
             return this.attArrayItems[attLength - 1];
         }
