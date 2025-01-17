@@ -24,6 +24,7 @@ namespace LinealCollection.Helpers
         public virtual T GoFirst()
         {
             ValidateNotEmpty();
+            this.attCurrentIndex = 0;
             return default(T);
         }
 
@@ -31,12 +32,14 @@ namespace LinealCollection.Helpers
         {
             ValidateNotEmpty();
             ValidateRangePosition(prmPosition);
+            this.attCurrentIndex = prmPosition;
             return default(T);
         }
 
         public virtual T GoLast()
         {
             ValidateNotEmpty();
+            this.attCurrentIndex = attLength - 1;
             return default(T);
         }
 
@@ -47,7 +50,6 @@ namespace LinealCollection.Helpers
 
             if (attCurrentIndex == null || attCurrentIndex == -1)
                 throw new Exception("There isn't reference to use this method.");
-            
             attCurrentIndex += 1;
             return default(T);
         }
