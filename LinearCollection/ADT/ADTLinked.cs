@@ -1,4 +1,5 @@
 ﻿using Collections.ADT;
+using LinealCollection.Helpers;
 using LinearCollection.Nodes;
 using System;
 using System.Collections.Generic;
@@ -25,58 +26,45 @@ namespace LinearCollection.ADT
             => this.attCapacity += this.incrementValue;
         protected override void toInsertOn(T prmItem, int prmPosition)
         {
+            LinkedNode<T> varNewNode = new LinkedNode<T>(prmItem);
+            this.attCurrentNode = varNewNode;
             if (this.attLength == 0)
             {
                 FirstInsertion(prmItem);
                 return;
             }
-            LinkedNode<T> varNewNode = new LinkedNode<T>(prmItem);
-            this.attLastNode.attNextNode = this.attCurrentNode = varNewNode;
-            this.attCurrentItem = this.attCurrentNode.attItem;
-            this.attCurrentIndex = attLength-1;
-            this.attLastNode = varNewNode;
+            if (prmPosition == attLength - 1 && this.isFlexible == true) toIncrementCapacity();
+            this.attLastNode.attNextNode = this.attCurrentNode;
+            this.attLastNode = this.attCurrentNode;
             this.attLength++;
+            SetCurrentAttributes(attLength - 1);
             SetPositionerIncrement();
         }
         protected override void toModifyOn(int prmPosition, T prmItem)
         {
-            ValidateRangePosition(prmPosition);
             GoIndex(prmPosition);
             this.attCurrentNode.attItem = prmItem;
             this.attCurrentItem = prmItem;
         }
-        protected override void toRetrieveRef(int prmPosition, ref T prmItem) 
-            => prmItem = GetNodeByIndex(prmPosition).attItem;
+        protected override void toRetrieveRef(int prmPosition, ref T prmItem)
+        {
+            GoIndex(prmPosition);
+            prmItem = this.attCurrentItem;
+        }
         protected LinkedNode<T> GetNodeByIndex(int prmPosition)
         {
-            LinkedNode<T> varNodePositioner = getPositioner(prmPosition);
-            TravelCollection(prmPosition, varNodePositioner);
+            GetPositioner(prmPosition);
+            TravelCollection(prmPosition);
             return this.attCurrentNode;
         }
-        protected LinkedNode<T> getPositioner(int prmPosition)
+        protected void GetPositioner(int prmPosition)
         {
-            if (prmPosition == this.attLength - 1)
-            {
-                this.attCurrentIndex = this.attLength;
-                return this.attLastNode;
-            }
-            if (prmPosition <= this.attLength / 2)
-            {
-                this.attCurrentIndex = 0;
-                if (prmPosition < this.attLength / 2) return this.attFirstNode;
-                this.attCurrentIndex = attLength - 1 / 2;
-                return this.attMiddleNode;
-            }
-            if (prmPosition > this.attLength / 2)
-            {
-                this.attCurrentIndex = prmPosition / 2;
-                return this.attMiddleNode;
-            }
-            return null;
+            if (prmPosition == this.attLength - 1) GoLast();
+            if (prmPosition == this.attLength / 2 || prmPosition > this.attLength / 2) GoIndex(prmPosition / 2);
+            if (prmPosition < this.attLength / 2) GoFirst();
         }
-        protected void TravelCollection(int prmPosition, LinkedNode<T> prmNode)
+        protected void TravelCollection(int prmPosition)
         {
-            attCurrentNode = prmNode;
             for (int varIdx = this.attCurrentIndex; varIdx < prmPosition; varIdx++)
             {
                 attCurrentNode = attCurrentNode.attNextNode;
@@ -85,11 +73,8 @@ namespace LinearCollection.ADT
         }
         protected void FirstInsertion(T prmItem)
         {
-            this.attCurrentIndex = 0;
-            LinkedNode<T> newNode = new LinkedNode<T>(prmItem);
-            this.attFirstNode = newNode;
-            this.attMiddleNode = newNode;
-            this.attLastNode = newNode;
+            SetCurrentAttributes(0);
+            this.attFirstNode = attMiddleNode = attLastNode = this.attCurrentNode;
             this.attLength++;
         }
         protected void SetPositionerIncrement()
@@ -102,16 +87,16 @@ namespace LinearCollection.ADT
         {
             //This method is to set positioners; Example : Middle.
         }
+        protected override void SetCurrentAttributes(int prmPosition)
+        {
+            this.attCurrentItem = this.attCurrentNode.attItem;
+            this.attCurrentIndex = prmPosition;
+        }
         #endregion
         #region PublicMethods
         public override void toRemoveByIndex(int prmPosition, ref T prmItemByRef)
         {
 
-        }
-        protected void SetCurrentAttributes(int prmPosition)
-        {
-            this.attCurrentItem = this.attCurrentNode.attItem;
-            this.attCurrentIndex = prmPosition;
         }
         public virtual void toRemove(T prmItem)
         {
@@ -140,7 +125,7 @@ namespace LinearCollection.ADT
         #region Positioners
         public override T GoFirst()
         {
-            base.GoFirst();
+            ValidateNotEmpty();
             this.attCurrentNode = this.attFirstNode;
             SetCurrentAttributes(0);
             return this.attCurrentItem;
@@ -154,23 +139,22 @@ namespace LinearCollection.ADT
         }
         public override T GoLast()
         {
-            base.GoLast();
+            ValidateNotEmpty();
             this.attCurrentNode = this.attLastNode;
             SetCurrentAttributes(this.attLength-1);
-            return this.attLastNode.attItem;
+            return this.attCurrentItem;
         }
         public override T GoNext()
         {
             base.GoNext();
             this.attCurrentNode = attCurrentNode.attNextNode;
-            SetCurrentAttributes(attCurrentIndex+1);
+            SetCurrentAttributes(attCurrentIndex);
             return attCurrentItem;
         }
         public override T GoPrev()
         {
             base.GoPrev();
-            GoIndex(attCurrentIndex--);
-            SetCurrentAttributes(attCurrentIndex - 1);
+            GoIndex(this.attCurrentIndex);
             return attCurrentItem;
         }
         #endregion

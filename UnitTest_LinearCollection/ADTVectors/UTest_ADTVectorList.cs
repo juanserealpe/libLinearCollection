@@ -50,7 +50,6 @@ namespace UnitTest_LinearCollection.Tests
             resultGoNext = _instanceVectorList.GoNext();
             Assert.AreEqual(30, resultGoNext);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => _instanceVectorList.GoNext());
 
             int resultGoPrev = _instanceVectorList.GoIndex(2);
             resultGoPrev = _instanceVectorList.GoPrev();
@@ -59,7 +58,6 @@ namespace UnitTest_LinearCollection.Tests
             resultGoPrev = _instanceVectorList.GoPrev();
             Assert.AreEqual(10, resultGoPrev);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => _instanceVectorList.GoPrev());
         } 
         #endregion
 

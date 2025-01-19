@@ -42,6 +42,8 @@ namespace Collections.ADT
         {
             if (this.attLength == this.attCapacity)
                 ValidateRangePosition(prmPosition);
+            if(prmPosition == attLength - 1 && this.isFlexible == true) toIncrementCapacity();
+       
             attArrayItems[prmPosition] = prmItem;
             this.attLength++;
         }
@@ -59,6 +61,11 @@ namespace Collections.ADT
             ValidateRangePosition(prmPosition);
             ValidateNotEmpty();
             prmItem = this.attArrayItems[prmPosition];
+        }
+        protected virtual void SetCurrentAttributes(int prmPosition)
+        {
+            this.attCurrentItem = this.attArrayItems[prmPosition];
+            this.attCurrentIndex = prmPosition;
         }
         #endregion
         #region PublicMethods
@@ -160,32 +167,34 @@ namespace Collections.ADT
         public override T GoFirst()
         {
             base.GoFirst();
-            this.attCurrentItem = this.attArrayItems[0];
+            SetCurrentAttributes(0);
             return this.attCurrentItem;
         }
         public override T GoIndex(int prmPosition)
         {
-            base.GoIndex(prmPosition);
-            this.attCurrentItem = this.attArrayItems[prmPosition];
+
+            base.GoIndex(prmPosition); 
+            SetCurrentAttributes(prmPosition);
             return this.attCurrentItem;
         }
         public override T GoLast()
         {
             base.GoLast();
-            this.attCurrentItem = this.attArrayItems[attLength - 1];
-            return this.attArrayItems[attLength - 1];
+            SetCurrentAttributes(this.attCurrentIndex);
+            return this.attCurrentItem;
         }
         public override T GoNext()
         {
             base.GoNext();
-            return GoIndex(attCurrentIndex);
+            SetCurrentAttributes(this.attCurrentIndex);
+            return this.attCurrentItem;
         }
         public override T GoPrev()
         {
             base.GoPrev();
-            return GoIndex(attCurrentIndex);
+            SetCurrentAttributes(this.attCurrentIndex);
+            return this.attCurrentItem;
         }
         #endregion
-
     }
 }

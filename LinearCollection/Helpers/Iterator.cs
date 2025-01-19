@@ -15,11 +15,9 @@ namespace LinealCollection.Helpers
         protected T attCurrentItem = default;
         public int attLength = 0;
         #endregion
-
         #region Builders
         public Iterator() { } 
         #endregion
-
         #region Positioners
         public virtual T GoFirst()
         {
@@ -27,7 +25,6 @@ namespace LinealCollection.Helpers
             this.attCurrentIndex = 0;
             return default(T);
         }
-
         public virtual T GoIndex(int prmPosition)
         {
             ValidateNotEmpty();
@@ -35,34 +32,28 @@ namespace LinealCollection.Helpers
             this.attCurrentIndex = prmPosition;
             return default(T);
         }
-
         public virtual T GoLast()
         {
             ValidateNotEmpty();
             this.attCurrentIndex = attLength - 1;
             return default(T);
         }
-
         public virtual T GoNext()
         {
             ValidateNotEmpty();
             ValidateRangePosition(attCurrentIndex+1);
-
-            if (attCurrentIndex == null || attCurrentIndex == -1)
-                throw new Exception("There isn't reference to use this method.");
             attCurrentIndex += 1;
             return default(T);
         }
-
         public virtual T GoPrev()
         {
             ValidateNotEmpty();
+            ValidateRangePosition(this.attCurrentIndex-1);
             ValidateRangePosition(this.attCurrentIndex);
             attCurrentIndex -= 1;
             return default(T);
         }
         #endregion
-
         #region Utilities
         public bool isEmpty()
         {
