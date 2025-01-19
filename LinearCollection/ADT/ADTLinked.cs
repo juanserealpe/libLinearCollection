@@ -13,30 +13,27 @@ namespace LinearCollection.ADT
         #region Attributes
         protected LinkedNode<T> attCurrentNode { get; set; }
         protected LinkedNode<T> attFirstNode;
-        protected LinkedNode<T> attMiddleNode;
+        public LinkedNode<T> attMiddleNode;
         protected LinkedNode<T> attLastNode; 
         #endregion
-
         #region Builders
         public ADTLinked(int prmCapacity) : base(prmCapacity) { }
         public ADTLinked() : base() { }
         #endregion
-
         #region ProtectedMethods
-        protected override void toIncrementCapacity()
-        {
-            this.attCapacity += this.incrementValue;
-        }
+        protected override void toIncrementCapacity() 
+            => this.attCapacity += this.incrementValue;
         protected override void toInsertOn(T prmItem, int prmPosition)
         {
-            if (this.attLength == 0 && prmPosition == 0)
+            if (this.attLength == 0)
             {
-                this.attCurrentIndex = 0;
                 FirstInsertion(prmItem);
                 return;
             }
             LinkedNode<T> varNewNode = new LinkedNode<T>(prmItem);
-            this.attLastNode.attNextNode = varNewNode;
+            this.attLastNode.attNextNode = this.attCurrentNode = varNewNode;
+            this.attCurrentItem = this.attCurrentNode.attItem;
+            this.attCurrentIndex = attLength-1;
             this.attLastNode = varNewNode;
             this.attLength++;
             SetPositionerIncrement();
@@ -44,14 +41,14 @@ namespace LinearCollection.ADT
         protected override void toModifyOn(int prmPosition, T prmItem)
         {
             ValidateRangePosition(prmPosition);
-
+            GoIndex(prmPosition);
+            this.attCurrentNode.attItem = prmItem;
+            this.attCurrentItem = prmItem;
         }
         protected override void toRetrieveRef(int prmPosition, ref T prmItem) 
             => prmItem = GetNodeByIndex(prmPosition).attItem;
         protected LinkedNode<T> GetNodeByIndex(int prmPosition)
         {
-            ValidateNotEmpty();
-            ValidateRangePosition(prmPosition);
             LinkedNode<T> varNodePositioner = getPositioner(prmPosition);
             TravelCollection(prmPosition, varNodePositioner);
             return this.attCurrentNode;
@@ -63,7 +60,6 @@ namespace LinearCollection.ADT
                 this.attCurrentIndex = this.attLength;
                 return this.attLastNode;
             }
-
             if (prmPosition <= this.attLength / 2)
             {
                 this.attCurrentIndex = 0;
@@ -71,7 +67,6 @@ namespace LinearCollection.ADT
                 this.attCurrentIndex = attLength - 1 / 2;
                 return this.attMiddleNode;
             }
-
             if (prmPosition > this.attLength / 2)
             {
                 this.attCurrentIndex = prmPosition / 2;
@@ -90,6 +85,7 @@ namespace LinearCollection.ADT
         }
         protected void FirstInsertion(T prmItem)
         {
+            this.attCurrentIndex = 0;
             LinkedNode<T> newNode = new LinkedNode<T>(prmItem);
             this.attFirstNode = newNode;
             this.attMiddleNode = newNode;
@@ -104,16 +100,18 @@ namespace LinearCollection.ADT
         }
         protected void SetPositionersDecrement()
         {
-
+            //This method is to set positioners; Example : Middle.
         }
         #endregion
-
         #region PublicMethods
-        public virtual void toRemoveByIndex(int prmPosition, ref T prmItem)
+        public override void toRemoveByIndex(int prmPosition, ref T prmItemByRef)
         {
-            ValidateRangePosition(prmPosition);
-            ValidateNotEmpty();
 
+        }
+        protected void SetCurrentAttributes(int prmPosition)
+        {
+            this.attCurrentItem = this.attCurrentNode.attItem;
+            this.attCurrentIndex = prmPosition;
         }
         public virtual void toRemove(T prmItem)
         {
@@ -139,42 +137,41 @@ namespace LinearCollection.ADT
 
         }
         #endregion
-
         #region Positioners
         public override T GoFirst()
         {
             base.GoFirst();
-            this.attCurrentItem = this.attFirstNode.attItem;
             this.attCurrentNode = this.attFirstNode;
+            SetCurrentAttributes(0);
             return this.attCurrentItem;
         }
         public override T GoIndex(int prmPosition)
         {
             base.GoIndex(prmPosition);
             this.attCurrentNode = GetNodeByIndex(prmPosition);
-            this.attCurrentItem = this.attCurrentNode.attItem;
+            SetCurrentAttributes(prmPosition);
             return this.attCurrentNode.attItem;
         }
         public override T GoLast()
         {
             base.GoLast();
-            this.attCurrentItem = this.attLastNode.attItem;
             this.attCurrentNode = this.attLastNode;
+            SetCurrentAttributes(this.attLength-1);
             return this.attLastNode.attItem;
         }
         public override T GoNext()
         {
             base.GoNext();
             this.attCurrentNode = attCurrentNode.attNextNode;
-            this.attCurrentItem = this.attCurrentNode.attItem;
+            SetCurrentAttributes(attCurrentIndex+1);
             return attCurrentItem;
         }
         public override T GoPrev()
         {
             base.GoPrev();
             GoIndex(attCurrentIndex--);
-            this.attCurrentIndex -= 1;
-            return attCurrentNode.attItem;
+            SetCurrentAttributes(attCurrentIndex - 1);
+            return attCurrentItem;
         }
         #endregion
     }

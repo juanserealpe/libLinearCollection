@@ -12,10 +12,8 @@ namespace LinearCollection.ADTLinked
     {
         public void toAdd(T prmItem) 
             => toInsertOn(prmItem, this.attLength);
-
         public void toModify(int prmPosition, T prmItem) 
             => toModifyOn(prmPosition, prmItem);
-
         public void toRetrieve(int prmPosition, ref T prmItem) 
             => toRetrieveRef(prmPosition, ref prmItem);
     }

@@ -44,6 +44,21 @@ namespace UnitTest_LinearCollection.Tests
             _instanceLinkedList.toRetrieve(2, ref refItem);
             Assert.AreEqual(3, refItem);
         }
+        [Test]
+        public void toModify()
+        {
+            AddItems(1, 2, 3);
+            int modifyItem = 0;
+            
+            _instanceLinkedList.toModify(1, modifyItem);
+            int resultModify = _instanceLinkedList.GoIndex(1);
+            Assert.AreEqual(0, resultModify);
+        }
+        [Test]
+        public void toRemoveByIdx()
+        {
+
+        }
         #endregion
 
         #region Positioners
@@ -68,6 +83,14 @@ namespace UnitTest_LinearCollection.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceLinkedList.GoNext());
             IndexItem = _instanceLinkedList.GoIndex(1);
             Assert.AreEqual(2, IndexItem);
+
+            PreviousItem = _instanceLinkedList.GoPrev();
+            Assert.AreEqual(1, PreviousItem);
+
+            AddItems(11);
+            PreviousItem = _instanceLinkedList.GoPrev();
+            Assert.AreEqual(10, PreviousItem);
+
         }
         #endregion 
 

@@ -10,7 +10,6 @@ namespace Collections.ADT
 {
     public abstract class ADT<T> : Iterator<T>, iADT<T> where T : IComparable<T>
     {
-
         #region Attributes
         protected int attCapacity;
         protected T attItem { get; set; }
@@ -18,7 +17,6 @@ namespace Collections.ADT
         protected bool isFlexible = false;
         protected int incrementValue = 100;
         #endregion
-
         #region Builders
         public ADT(int prmCapacity)
         {
@@ -32,7 +30,6 @@ namespace Collections.ADT
             this.attArrayItems = new T[attCapacity];
         }
         #endregion
-
         #region ProtectedMethods
         protected virtual void toIncrementCapacity()
         {
@@ -64,7 +61,6 @@ namespace Collections.ADT
             prmItem = this.attArrayItems[prmPosition];
         }
         #endregion
-
         #region PublicMethods
         public virtual void toRemoveByIndex(int prmPosition, ref T prmItem)
         {
@@ -160,7 +156,6 @@ namespace Collections.ADT
             }
         }
         #endregion
-
         #region Positioners
         public override T GoFirst()
         {

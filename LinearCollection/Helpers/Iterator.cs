@@ -71,7 +71,7 @@ namespace LinealCollection.Helpers
         }
         protected bool isValid(int prmPosition)
         {
-            if (this.attLength <= prmPosition) return false;
+            if (prmPosition >= this.attLength) return false;
             if (prmPosition < 0) return false;
             return true;
         }
