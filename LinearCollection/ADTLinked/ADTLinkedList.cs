@@ -10,6 +10,8 @@ namespace LinearCollection.ADTLinked
 {
     public class ADTLinkedList<T> : ADTLinked<T>, iADTList<T> where T : IComparable<T>
     {
+        public ADTLinkedList() : base() { }
+        public ADTLinkedList(int prmCapacity) : base(prmCapacity) { }
         public void toAdd(T prmItem) 
             => toInsertOn(prmItem, this.attLength);
         public void toModify(int prmPosition, T prmItem) 

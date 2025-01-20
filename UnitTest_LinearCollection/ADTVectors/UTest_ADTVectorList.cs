@@ -175,7 +175,7 @@ namespace UnitTest_LinearCollection.Tests
 
             Assert.AreEqual(2, _instanceListWithCapacity.attLength);
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceListWithCapacity.toAdd(30));
-        }  
+        }
         #endregion
 
         #endregion

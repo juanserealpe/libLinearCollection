@@ -92,7 +92,22 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(10, PreviousItem);
 
         }
-        #endregion 
+        #endregion
+
+        #region Exceptions
+        [Test]
+        public void LimitCapactyException()
+        {
+            ADTLinkedList<int> newList = new ADTLinkedList<int>(5);
+            newList.toAdd(1);
+            newList.toAdd(2);
+            newList.toAdd(3);
+            newList.toAdd(4);
+            newList.toAdd(5);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => newList.toAdd(6));
+        }
+        #endregion
 
         #endregion
     }

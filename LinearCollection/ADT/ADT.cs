@@ -41,8 +41,10 @@ namespace Collections.ADT
         protected virtual void toInsertOn(T prmItem, int prmPosition)
         {
             if (this.attLength == this.attCapacity)
-                ValidateRangePosition(prmPosition);
-            if(prmPosition == attLength - 1 && this.isFlexible == true) toIncrementCapacity();
+            {
+                if(this.isFlexible) toIncrementCapacity();
+                ValidateRangePosition(this.attCapacity);
+            }
        
             attArrayItems[prmPosition] = prmItem;
             this.attLength++;
