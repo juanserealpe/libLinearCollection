@@ -58,7 +58,7 @@ namespace UnitTest_LinearCollection.Tests
             resultGoPrev = _instanceVectorList.GoPrev();
             Assert.AreEqual(10, resultGoPrev);
 
-        } 
+        }
         #endregion
 
         #region CRUDs
@@ -130,7 +130,7 @@ namespace UnitTest_LinearCollection.Tests
 
         #region Utilities
         [Test]
-        public void toCrearArray()
+        public void toClearArray()
         {
             AddItems(10, 20, 30);
             _instanceVectorList.toClear();

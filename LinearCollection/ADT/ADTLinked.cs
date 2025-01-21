@@ -24,7 +24,11 @@ namespace LinearCollection.ADT
         #region ProtectedMethods
         protected override void toIncrementCapacity()
         {
-            if (!this.isFlexible) return;
+            if (!this.isFlexible)
+            {
+                ValidateRangePosition(this.attCapacity);
+                return;
+            }
             this.attCapacity += this.incrementValue;
         }
         protected override void toInsertOn(T prmItem, int prmPosition)
@@ -32,7 +36,7 @@ namespace LinearCollection.ADT
             if (this.attLength == this.attCapacity)
             {
                 toIncrementCapacity();
-                ValidateRangePosition(this.attCapacity);
+
             }
             LinkedNode<T> varNewNode = new LinkedNode<T>(prmItem);
             this.attCurrentNode = varNewNode;
@@ -41,7 +45,6 @@ namespace LinearCollection.ADT
                 FirstInsertion(prmItem);
                 return;
             }
-            if (attLength == this.attCapacity && this.isFlexible == true) toIncrementCapacity();
             this.attLastNode.attNextNode = this.attCurrentNode;
             this.attLastNode = this.attCurrentNode;
             this.attLength++;
