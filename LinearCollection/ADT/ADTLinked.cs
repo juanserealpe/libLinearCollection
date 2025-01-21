@@ -33,11 +33,7 @@ namespace LinearCollection.ADT
         }
         protected override void toInsertOn(T prmItem, int prmPosition)
         {
-            if (this.attLength == this.attCapacity)
-            {
-                toIncrementCapacity();
-
-            }
+            if (this.attLength == this.attCapacity) toIncrementCapacity();
             LinkedNode<T> varNewNode = new LinkedNode<T>(prmItem);
             this.attCurrentNode = varNewNode;
             if (this.attLength == 0)
@@ -76,10 +72,7 @@ namespace LinearCollection.ADT
         }
         protected void TravelCollection(int prmPosition)
         {
-            for (int varIdx = this.attCurrentIndex; varIdx < prmPosition; varIdx++)
-            {
-                attCurrentNode = attCurrentNode.attNextNode;
-            }
+            for (int varIdx = this.attCurrentIndex; varIdx < prmPosition; varIdx++) attCurrentNode = attCurrentNode.attNextNode;
             this.attCurrentIndex = prmPosition;
         }
         protected void FirstInsertion(T prmItem)
@@ -94,41 +87,92 @@ namespace LinearCollection.ADT
             if (this.attLength % 2 != 0)
                 this.attMiddleNode = attMiddleNode.attNextNode;
         }
-        protected void SetPositionersDecrement()
+        protected void SetPositionersDecrement(int prmPosition, ref T prmItemByRef)
         {
-            //This method is to set positioners; Example : Middle.
+            if(this.attLength == 1)
+            {
+                prmItemByRef = this.attFirstNode.attItem;
+                this.attCurrentNode = this.attFirstNode = this.attMiddleNode = this.attLastNode = null;
+                this.attLength--;
+                return;
+            }
+            if(prmPosition == 0)
+            {
+                GoFirst();
+                prmItemByRef = this.attCurrentItem;
+                this.attCurrentNode = this.attCurrentNode.attNextNode;
+                this.attFirstNode = attCurrentNode;
+                SetCurrentAttributes(0);
+            }
+            if (prmPosition == this.attLength-1)
+            {
+                GoIndex(prmPosition-1);
+                prmItemByRef = this.attCurrentNode.attNextNode.attItem;
+                this.attCurrentNode.attNextNode = null;
+                this.attLastNode = attCurrentNode;
+                SetCurrentAttributes(attLength - 1);
+            }
+            this.attLength--;
         }
         protected override void SetCurrentAttributes(int prmPosition)
         {
             this.attCurrentItem = this.attCurrentNode.attItem;
             this.attCurrentIndex = prmPosition;
         }
+        protected void SetMiddleWhenDecrement()
+        {
+            int varAuxLength = attLength-1;
+            GoIndex(varAuxLength/2);
+            this.attMiddleNode = this.attCurrentNode;
+        }
         #endregion
         #region PublicMethods
         public override void toRemoveByIndex(int prmPosition, ref T prmItemByRef)
         {
-
+            //share this funtion with toRemove(); whereby becoming soon will have a method to share this.
+            if (prmPosition == 0 || prmPosition == this.attLength-1)
+            {
+                SetPositionersDecrement(prmPosition, ref prmItemByRef);
+                return;
+            }
+            GoIndex(prmPosition - 1);
+            prmItemByRef = this.attCurrentNode.attNextNode.attItem;
+            this.attCurrentNode.attNextNode = this.attCurrentNode.attNextNode.attNextNode;
+            SetCurrentAttributes(prmPosition-1);
+            this.attLength--;
+            SetMiddleWhenDecrement();
         }
-        public virtual void toRemove(T prmItem)
+        public override void toRemove(T prmItem)
         {
+            LinkedNode<T> nodeFound = this.attFirstNode;
+            T dummyRef = default(T);
+            for (int varIdx = 0; varIdx < this.attLength; varIdx++)
+            {
+                if (nodeFound.attItem.Equals(prmItem))
+                {
+                    toRemoveByIndex(varIdx, ref dummyRef);
+                    break;
+                }
+                nodeFound = nodeFound.attNextNode;
+            }
         }
-        public virtual void toPrint()
+        public override void toPrint()
         {
             ValidateNotEmpty();
         }
-        public virtual void toSort()
+        public override void toSort()
         {
 
         }
-        public virtual void toClear()
+        public override void toClear()
         {
 
         }
-        public virtual void toCopyTo(T[] prmArray, int startIndex)
+        public override void toCopyTo(T[] prmArray, int startIndex)
         {
 
         }
-        public virtual void toReverse()
+        public override void toReverse()
         {
 
         }
