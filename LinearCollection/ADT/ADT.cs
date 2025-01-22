@@ -33,6 +33,7 @@ namespace Collections.ADT
         #region ProtectedMethods
         protected virtual void toIncrementCapacity()
         {
+            if (!this.isFlexible) ValidateRangePosition(this.attCapacity);
             this.attCapacity += this.incrementValue;
             T[] newArray = new T[this.attCapacity];
             for (int varIdx = 0; varIdx < this.attLength; varIdx++) newArray[varIdx] = this.attArrayItems[varIdx];
@@ -40,12 +41,7 @@ namespace Collections.ADT
         }
         protected virtual void toInsertOn(T prmItem, int prmPosition)
         {
-            if (this.attLength == this.attCapacity)
-            {
-                if(this.isFlexible) toIncrementCapacity();
-                ValidateRangePosition(this.attCapacity);
-            }
-       
+            if (this.attLength == this.attCapacity) toIncrementCapacity();
             attArrayItems[prmPosition] = prmItem;
             this.attLength++;
         }

@@ -126,6 +126,14 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(2, resultValue);
             Assert.AreEqual(1, _instanceVectorList.attLength);
         }
+        [Test]
+        public void AddManyItemsToCheckCapacity()
+        {
+            for (int varIdx = 0; varIdx < 1000; varIdx++)
+            {
+                AddItems(varIdx + 1);
+            }
+        }
         #endregion
 
         #region Utilities
