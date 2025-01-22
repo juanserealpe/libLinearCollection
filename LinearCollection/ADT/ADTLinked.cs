@@ -14,8 +14,8 @@ namespace LinearCollection.ADT
         #region Attributes
         protected LinkedNode<T> attCurrentNode { get; set; }
         protected LinkedNode<T> attFirstNode;
-        public LinkedNode<T> attMiddleNode;
-        protected LinkedNode<T> attLastNode; 
+        protected LinkedNode<T> attLastNode;
+        protected LinkedNode<T> attMiddleNode;
         #endregion
         #region Builders
         public ADTLinked(int prmCapacity) : base(prmCapacity) { }
@@ -129,7 +129,6 @@ namespace LinearCollection.ADT
         #region PublicMethods
         public override void toRemoveByIndex(int prmPosition, ref T prmItemByRef)
         {
-            //share this funtion with toRemove(); whereby becoming soon will have a method to share this.
             if (prmPosition == 0 || prmPosition == this.attLength-1)
             {
                 SetPositionersDecrement(prmPosition, ref prmItemByRef);
@@ -141,6 +140,7 @@ namespace LinearCollection.ADT
             SetCurrentAttributes(prmPosition-1);
             this.attLength--;
             SetMiddleWhenDecrement();
+            GoIndex(prmPosition);
         }
         public override void toRemove(T prmItem)
         {
@@ -155,10 +155,6 @@ namespace LinearCollection.ADT
                 }
                 nodeFound = nodeFound.attNextNode;
             }
-        }
-        public override void toPrint()
-        {
-            ValidateNotEmpty();
         }
         public override void toSort()
         {

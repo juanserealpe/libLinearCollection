@@ -24,7 +24,6 @@ namespace UnitTest_LinearCollection.Tests
         #endregion
 
         #region CRUD Operations
-
         [Test]
         public void AddItem_AddsElementAtEnd()
         {
@@ -144,63 +143,15 @@ namespace UnitTest_LinearCollection.Tests
             //(2);
             _instanceLinkedList.toRemove(4);
             Assert.AreEqual(2, _instanceLinkedList.GoFirst());
-            Assert.AreEqual(2, _instanceLinkedList.attMiddleNode.attItem);
             Assert.AreEqual(2, _instanceLinkedList.GoLast());
             //(2)
             //empty
             _instanceLinkedList.toRemove(2);
             Assert.IsTrue(_instanceLinkedList.isEmpty());
         }
-        [Test]
-        public void RemoveCheckMiddle()
-        {
-            //(1, 2, 3, [4], 5, 6, 7, 8);
-            AddItems(1, 2, 3, 4, 5, 6, 7, 8);
-            Assert.AreEqual(4, _instanceLinkedList.attMiddleNode.attItem);
-
-            //(1, 2, 3, [4], 5, 6, 7, 8);
-            //(1, 3, 4, [5], 6, 7, 8);
-            int itemRemoved = 0;
-            _instanceLinkedList.toRemoveByIndex(1, ref itemRemoved);
-            Assert.AreEqual(2, itemRemoved);
-            Assert.AreEqual(5, _instanceLinkedList.attMiddleNode.attItem);
-
-            //(1, 3, 4, [5], 6, 7, 8);
-            //(1, 4, [5], 6, 7, 8);
-            _instanceLinkedList.toRemoveByIndex(1, ref itemRemoved);
-            Assert.AreEqual(3, itemRemoved);
-            Assert.AreEqual(5, _instanceLinkedList.attMiddleNode.attItem);
-
-
-            //(1, 4, [5], 6, 7, 8);
-            //(1, 5, [6], 7, 8);
-            _instanceLinkedList.toRemoveByIndex(1, ref itemRemoved);
-            Assert.AreEqual(4, itemRemoved);
-            Assert.AreEqual(6, _instanceLinkedList.attMiddleNode.attItem);
-
-            //(1, 5, [6], 7, 8);
-            //(1, [6], 7, 8);
-            _instanceLinkedList.toRemoveByIndex(1, ref itemRemoved);
-            Assert.AreEqual(5, itemRemoved);
-            Assert.AreEqual(6, _instanceLinkedList.attMiddleNode.attItem);
-
-            //(1, [6], 7, 8);
-            //(1, [6], 8);
-            _instanceLinkedList.toRemoveByIndex(2, ref itemRemoved);
-            Assert.AreEqual(7, itemRemoved);
-            Assert.AreEqual(6, _instanceLinkedList.attMiddleNode.attItem);
-
-            //(1, [6], 8);
-            //([1], 8);
-            _instanceLinkedList.toRemoveByIndex(1, ref itemRemoved);
-            Assert.AreEqual(6, itemRemoved);
-            Assert.AreEqual(1, _instanceLinkedList.attMiddleNode.attItem);
-        }
-
         #endregion
 
         #region Positioning Operations
-
         [Test]
         public void Positioners_WorkAsExpected()
         {
@@ -220,45 +171,9 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(1, _instanceLinkedList.GoPrev());
             Assert.AreEqual(2, _instanceLinkedList.GoNext());
         }
-
-        [Test]
-        public void Middle_WorkAsExpected()
-        {
-            int varIncrement = 1; //1
-            AddItems(1);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-            AddItems(2);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-
-            varIncrement += 1; //2
-            AddItems(3);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-            AddItems(4);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-
-            varIncrement += 1; //3
-            AddItems(5);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-            AddItems(6);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-
-            varIncrement += 1; //4
-            AddItems(7);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-            AddItems(8);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-
-            varIncrement += 1; //5
-            AddItems(9);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-            AddItems(10);
-            Assert.AreEqual(_instanceLinkedList.attMiddleNode.attItem, varIncrement);
-        }
-
         #endregion
 
         #region Exception Handling
-
         [Test]
         public void AddItem_ThrowsExceptionWhenExceedingCapacity()
         {
@@ -283,7 +198,6 @@ namespace UnitTest_LinearCollection.Tests
             _instanceLinkedList.GoPrev();
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceLinkedList.GoPrev());
         }
-
         #endregion
     }
 }

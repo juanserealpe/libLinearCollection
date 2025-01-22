@@ -96,21 +96,6 @@ namespace Collections.ADT
                 }
             }
         }
-        public virtual void toPrint()
-        {
-            ValidateNotEmpty();
-            for (int varIdx = 0; varIdx < this.attLength; varIdx++)
-            {
-                if (varIdx == this.attLength - 1)
-                {
-                    Console.Write(this.attArrayItems[varIdx] + ".");
-                }
-                else
-                {
-                    Console.Write(this.attArrayItems[varIdx] + ", ");
-                }
-            }
-        }
         public virtual void toSort()
         {
             if (this.attLength <= 1) return;
