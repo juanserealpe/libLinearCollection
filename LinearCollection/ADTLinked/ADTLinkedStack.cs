@@ -1,4 +1,4 @@
-﻿using Collections.ADT;
+﻿using LinearCollection.ADT;
 using LinearCollection.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinearCollection.ADTVectors
+namespace LinearCollection.ADTLinked
 {
-    public class ADTVectorStack<T> : ADT<T> , iADTStack<T> where T : IComparable<T>
+    public class ADTLinkedStack<T> : ADTLinked<T>, iADTStack<T> where T : IComparable<T>
     {
         #region Builders
-        public ADTVectorStack() : base()
+        public ADTLinkedStack() : base()
         {
 
         }
-        public ADTVectorStack(int prmCapacity) : base(prmCapacity)
+        public ADTLinkedStack(int prmCapacity) : base(prmCapacity)
         {
 
         } 

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Collections.Interfaces
+namespace LinearCollection.Interfaces
 {
-    public interface iVectorQueue<T> where T : IComparable<T>
+    public interface iADTStack <T> where T : IComparable<T>
     {
         void toPush(T prmItem);
         void toPop(ref T prmItem);
