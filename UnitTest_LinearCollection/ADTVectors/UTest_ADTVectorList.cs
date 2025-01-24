@@ -6,7 +6,7 @@ namespace UnitTest_LinearCollection.Tests
     {
         private ADTVectorList<int> _instanceVectorList;
 
-        #region SetUp
+        #region SetUp and Helpers
 
         [SetUp]
         public void Setup()
@@ -21,9 +21,7 @@ namespace UnitTest_LinearCollection.Tests
             }
         }
         #endregion
-
         #region Tests
-
         #region Positioners
         [Test]
         public void Positioners()
@@ -60,10 +58,9 @@ namespace UnitTest_LinearCollection.Tests
 
         }
         #endregion
-
         #region CRUDs
         [Test]
-        public void ToAdd()
+        public void toAdd_AsExpected()
         {
             AddItems(10, 20, 30);
 
@@ -73,7 +70,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(3, _instanceVectorList.attLength);
         }
         [Test]
-        public void ToRetrieve()
+        public void toRetrieve_AsExpected()
         {
             AddItems(10);
             int result = 0;
@@ -83,7 +80,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(1, _instanceVectorList.attLength);
         }
         [Test]
-        public void ToRemoveByIdx()
+        public void toRemoveByIdx_AsExpected()
         {
             AddItems(10, 15, 20);
 
@@ -98,7 +95,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(20, refResult);
         }
         [Test]
-        public void ToRemove()
+        public void toRemove_AsExpected()
         {
             AddItems(10, 12, 13);
 
@@ -116,7 +113,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(0, _instanceVectorList.attLength);
         }
         [Test]
-        public void ToModify()
+        public void toModify_AsExpected()
         {
             _instanceVectorList.toAdd(1);
             _instanceVectorList.toModify(0, 2);
@@ -127,7 +124,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(1, _instanceVectorList.attLength);
         }
         [Test]
-        public void AddManyItemsToCheckCapacity()
+        public void AddManyItems_toCheckCapacity()
         {
             for (int varIdx = 0; varIdx < 1000; varIdx++)
             {
@@ -135,17 +132,16 @@ namespace UnitTest_LinearCollection.Tests
             }
         }
         #endregion
-
         #region Utilities
         [Test]
-        public void toClearArray()
+        public void toClearArray_AsExpected()
         {
             AddItems(10, 20, 30);
             _instanceVectorList.toClear();
             Assert.AreEqual(0, _instanceVectorList.attLength);
         }
         [Test]
-        public void toReverse()
+        public void toReverse_AsExpected()
         {
             AddItems(10, 20, 30);
             _instanceVectorList.toReverse();
@@ -154,7 +150,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(10, _instanceVectorList.GoIndex(2));
         }
         [Test]
-        public void toSort()
+        public void toSort_AsExpected()
         {
             AddItems(30, 10, 20);
             _instanceVectorList.toSort();
@@ -162,19 +158,16 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(20, _instanceVectorList.GoIndex(1));
             Assert.AreEqual(30, _instanceVectorList.GoIndex(2));
         }
-
-
         #endregion
-
         #region Exceptions
         [Test]
-        public void ArgumentOutOfRangeException()
+        public void PositionerOutOfRange_Exception()
         {
             _instanceVectorList.toAdd(10);
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceVectorList.GoIndex(5));
         }
         [Test]
-        public void LimitCapactyException()
+        public void LimitCapacty_Exception()
         {
             ADTVectorList<int> _instanceListWithCapacity = new ADTVectorList<int>(2);
 
@@ -185,7 +178,6 @@ namespace UnitTest_LinearCollection.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => _instanceListWithCapacity.toAdd(30));
         }
         #endregion
-
         #endregion
     }
 }

@@ -176,6 +176,11 @@ namespace Collections.ADT
             SetCurrentAttributes(this.attCurrentIndex);
             return this.attCurrentItem;
         }
+        public override T GoItem()
+        {
+            base.GoItem();
+            return this.attCurrentItem;
+        }
         #endregion
     }
 }

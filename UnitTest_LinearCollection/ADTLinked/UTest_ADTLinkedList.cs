@@ -25,21 +25,13 @@ namespace UnitTest_LinearCollection.Tests
 
         #region CRUD Operations
         [Test]
-        public void AddItem_AddsElementAtEnd()
+        public void toAdd_AsExpected()
         {
             AddItems(1, 2, 3);
             Assert.AreEqual(3, _instanceLinkedList.attLength);
         }
         [Test]
-        public void AddManyItemsToCheckCapacity()
-        {
-            for (int varIdx = 0; varIdx < 1000; varIdx++)
-            {
-                AddItems(varIdx + 1);
-            }
-        }
-        [Test]
-        public void RetrieveItemByIndex_ReturnsCorrectValue()
+        public void toRetrieveItemByIndex_AsExpected()
         {
             AddItems(1, 2, 3);
             int retrievedItem = 0;
@@ -48,7 +40,34 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(2, retrievedItem);
         }
         [Test]
-        public void ModifyItem_UpdatesValueCorrectly()
+        public void toRemoveItem_AsExpected()
+        {
+            AddItems(1, 2, 3, 4, 5);
+
+            //(1, 2, 3, 4, 5);
+            //(2, 3, 4, 5);
+            _instanceLinkedList.toRemove(1);
+            Assert.AreEqual(2, _instanceLinkedList.GoFirst());
+            //(2, 3, 4, 5);
+            //(2, 3, 4);
+            _instanceLinkedList.toRemove(5);
+            Assert.AreEqual(4, _instanceLinkedList.GoLast());
+            //(2, 3, 4);
+            //(2, 4);
+            _instanceLinkedList.toRemove(3);
+            Assert.AreEqual(4, _instanceLinkedList.GoLast());
+            //(2, 4);
+            //(2);
+            _instanceLinkedList.toRemove(4);
+            Assert.AreEqual(2, _instanceLinkedList.GoFirst());
+            Assert.AreEqual(2, _instanceLinkedList.GoLast());
+            //(2)
+            //empty
+            _instanceLinkedList.toRemove(2);
+            Assert.IsTrue(_instanceLinkedList.isEmpty());
+        }
+        [Test]
+        public void toModifyItem_AsExpected()
         {
             AddItems(1, 2, 3);
             _instanceLinkedList.toModify(1, 99);
@@ -56,7 +75,7 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(99, _instanceLinkedList.GoIndex(1));
         }
         [Test]
-        public void RemoveItemByIndex_DeletesCorrectItem()
+        public void toRemoveItemByIndex_AsExpected()
         {
             AddItems(1, 2, 3, 4, 5);
             int itemRemoved = 0; 
@@ -87,8 +106,10 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(5, itemRemoved);
             Assert.IsTrue(_instanceLinkedList.isEmpty());
         }
+
+        #region DeepChecks
         [Test]
-        public void RemoveItemByIndex_if_itsLastOrFirst()
+        public void toRemoveItemByIndex_FirstAndLast_toCheckFlow()
         {
             AddItems(1, 2, 3, 4, 5);
             int itemRemoved = 0;
@@ -123,37 +144,20 @@ namespace UnitTest_LinearCollection.Tests
 
         }
         [Test]
-        public void RemoveItem_DeletesCorrectItem()
+        public void AddManyItems_toCheckCapacity()
         {
-            AddItems(1, 2, 3, 4, 5);
+            for (int varIdx = 0; varIdx < 1000; varIdx++)
+            {
+                AddItems(varIdx + 1);
+            }
+        } 
+        #endregion
 
-            //(1, 2, 3, 4, 5);
-            //(2, 3, 4, 5);
-            _instanceLinkedList.toRemove(1);
-            Assert.AreEqual(2, _instanceLinkedList.GoFirst());
-            //(2, 3, 4, 5);
-            //(2, 3, 4);
-            _instanceLinkedList.toRemove(5);
-            Assert.AreEqual(4, _instanceLinkedList.GoLast());
-            //(2, 3, 4);
-            //(2, 4);
-            _instanceLinkedList.toRemove(3);
-            Assert.AreEqual(4, _instanceLinkedList.GoLast());
-            //(2, 4);
-            //(2);
-            _instanceLinkedList.toRemove(4);
-            Assert.AreEqual(2, _instanceLinkedList.GoFirst());
-            Assert.AreEqual(2, _instanceLinkedList.GoLast());
-            //(2)
-            //empty
-            _instanceLinkedList.toRemove(2);
-            Assert.IsTrue(_instanceLinkedList.isEmpty());
-        }
         #endregion
 
         #region Positioning Operations
         [Test]
-        public void Positioners_WorkAsExpected()
+        public void Positioners_AsExpected()
         {
             AddItems(1, 2, 3, 4, 5);
             Assert.AreEqual(1, _instanceLinkedList.GoFirst());
@@ -170,6 +174,29 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(2, _instanceLinkedList.GoPrev());
             Assert.AreEqual(1, _instanceLinkedList.GoPrev());
             Assert.AreEqual(2, _instanceLinkedList.GoNext());
+        }
+        [Test]
+        public void PositionersThenRemoved_AsExpected()
+        {
+            AddItems(1, 2, 3, 4, 5, 6);
+            _instanceLinkedList.toRemove(4);
+            //(1, 2, 3, 5, 6)
+            Assert.AreEqual(5, _instanceLinkedList.GoItem());
+            _instanceLinkedList.toRemove(6);
+            //(1, 2, 3, 5)
+            Assert.AreEqual(5, _instanceLinkedList.GoItem());
+
+            _instanceLinkedList.toRemove(2);
+            //(1, 3, 5)
+            Assert.AreEqual(3, _instanceLinkedList.GoItem());
+
+            _instanceLinkedList.toRemove(1);
+            //(3, 5)
+            Assert.AreEqual(3, _instanceLinkedList.GoItem());
+
+            _instanceLinkedList.toRemove(3);
+            //(5)
+            Assert.AreEqual(5, _instanceLinkedList.GoItem());
         }
         #endregion
 

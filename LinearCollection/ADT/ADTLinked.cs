@@ -118,7 +118,6 @@ namespace LinearCollection.ADT
                 prmItemByRef = this.attCurrentNode.attNextNode.attItem;
                 this.attCurrentNode.attNextNode = null;
                 this.attLastNode = attCurrentNode;
-                SetCurrentAttributes(attLength - 1);
             }
             this.attLength--;
         }
@@ -223,13 +222,18 @@ namespace LinearCollection.ADT
             base.GoNext();
             this.attCurrentNode = attCurrentNode.attNextNode;
             SetCurrentAttributes(attCurrentIndex);
-            return attCurrentItem;
+            return this.attCurrentItem;
         }
         public override T GoPrev()
         {
             base.GoPrev();
             GoIndex(this.attCurrentIndex);
-            return attCurrentItem;
+            return this.attCurrentItem;
+        }
+        public override T GoItem()
+        {
+            base.GoItem();
+            return this.attCurrentItem;
         }
         #endregion
     }

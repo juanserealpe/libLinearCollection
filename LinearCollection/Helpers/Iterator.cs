@@ -53,6 +53,12 @@ namespace LinealCollection.Helpers
             attCurrentIndex -= 1;
             return default(T);
         }
+        public virtual T GoItem()
+        {
+            ValidateNotEmpty();
+            ValidateRangePosition(this.attCurrentIndex);
+            return default(T);
+        }
         #endregion
         #region Utilities
         public bool isEmpty()
