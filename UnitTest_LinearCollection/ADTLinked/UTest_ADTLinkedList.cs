@@ -173,6 +173,56 @@ namespace UnitTest_LinearCollection.Tests
         }
         #endregion
 
+        #region Utilities
+        [Test]
+        public void toClear_AsExpected()
+        {
+            AddItems(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            _instanceLinkedList.toClear();
+            Assert.IsTrue(_instanceLinkedList.isEmpty());
+        }
+        [Test]
+        public void toClear_ThenInsertion()
+        {
+            AddItems(1, 2, 3, 4, 5, 6, 7, 8, 9);
+            _instanceLinkedList.toClear();
+            Assert.IsTrue(_instanceLinkedList.isEmpty());
+
+            AddItems(1);
+            Assert.IsTrue(!_instanceLinkedList.isEmpty());
+            Assert.AreEqual(1, _instanceLinkedList.GoIndex(0));
+            Assert.AreEqual(1, _instanceLinkedList.GoLast());
+
+            AddItems(2);
+            Assert.AreEqual(2, _instanceLinkedList.GoIndex(1));
+            Assert.AreEqual(2, _instanceLinkedList.GoLast());
+        }
+        [Test]
+        public void toReverse_AsExpected()
+        {
+            AddItems(1, 2, 3, 4, 5, 6, 7);
+            _instanceLinkedList.toReverse();
+            Assert.AreEqual(7, _instanceLinkedList.GoFirst());
+            Assert.AreEqual(1, _instanceLinkedList.GoLast());
+
+            int auxLast = _instanceLinkedList.attLength-1;
+            int auxFirst = 0;
+
+            auxLast -= 1;
+            auxFirst += 1;
+            Assert.AreEqual(2, _instanceLinkedList.GoIndex(auxLast));
+            Assert.AreEqual(6, _instanceLinkedList.GoIndex(auxFirst));
+
+            auxLast -= 1;
+            auxFirst += 1;
+            Assert.AreEqual(3, _instanceLinkedList.GoIndex(auxLast));
+            Assert.AreEqual(5, _instanceLinkedList.GoIndex(auxFirst));
+
+            Assert.AreEqual(4, _instanceLinkedList.GoNext());
+
+        }
+        #endregion
+
         #region Exception Handling
         [Test]
         public void AddItem_ThrowsExceptionWhenExceedingCapacity()

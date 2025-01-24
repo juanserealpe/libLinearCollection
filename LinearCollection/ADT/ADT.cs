@@ -115,11 +115,9 @@ namespace Collections.ADT
         }
         public virtual void toClear()
         {
-            if (isFlexible) this.attCapacity = 100;
-
+            this.attCapacity = 100;
             for (int varIdx = 0; varIdx < this.attLength; varIdx++)
                 this.attArrayItems[varIdx] = default(T);
-
             this.attArrayItems = new T[this.attCapacity];
             this.attLength = 0;
         }

@@ -66,8 +66,16 @@ namespace LinearCollection.ADT
         }
         protected void GetPositioner(int prmPosition)
         {
-            if (prmPosition == this.attLength - 1) GoLast();
-            if (prmPosition == this.attLength / 2 || prmPosition > this.attLength / 2) GoIndex(prmPosition / 2);
+            if (prmPosition == this.attLength - 1)
+            {
+                GoLast();
+                return;
+            }
+            if (prmPosition == this.attLength / 2 || prmPosition > this.attLength / 2)
+            {
+                GoIndex(prmPosition / 2);
+                return;
+            }
             if (prmPosition < this.attLength / 2) GoFirst();
         }
         protected void TravelCollection(int prmPosition)
@@ -162,7 +170,10 @@ namespace LinearCollection.ADT
         }
         public override void toClear()
         {
-
+            base.toClear();
+            this.attCurrentNode = null;
+            this.attCurrentItem = default(T);
+            attFirstNode = attMiddleNode = attLastNode = null;
         }
         public override void toCopyTo(T[] prmArray, int startIndex)
         {
@@ -170,7 +181,19 @@ namespace LinearCollection.ADT
         }
         public override void toReverse()
         {
-
+            int firstCount = 0;
+            int lastCount = this.attLength - 1;
+            do
+            {
+                if (firstCount >= this.attLength) break;
+                GoIndex(firstCount);
+                T auxVar = this.attCurrentItem;
+                GoIndex(lastCount);
+                toModifyOn(firstCount, this.attCurrentItem);
+                toModifyOn(lastCount, auxVar);
+                firstCount += 1;
+                lastCount -= 1;
+            } while (firstCount != this.attLength/2);
         }
         #endregion
         #region Positioners
