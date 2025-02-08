@@ -4,6 +4,7 @@ using LinearCollection.Nodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -132,6 +133,10 @@ namespace LinearCollection.ADT
             GoIndex(varAuxLength/2);
             this.attMiddleNode = this.attCurrentNode;
         }
+        protected override int Partition(int left, int right)
+        {
+            throw new Exception();
+        }
         #endregion
         #region PublicMethods
         public override void toRemoveByIndex(int prmPosition, ref T prmItemByRef)
@@ -163,10 +168,6 @@ namespace LinearCollection.ADT
                 nodeFound = nodeFound.attNextNode;
             }
         }
-        public override void toSort()
-        {
-
-        }
         public override void toClear()
         {
             base.toClear();
@@ -193,6 +194,10 @@ namespace LinearCollection.ADT
                 firstCount += 1;
                 lastCount -= 1;
             } while (firstCount != this.attLength/2);
+        }
+        public override void QuickSort(int left, int right)
+        {
+            throw new Exception();
         }
         #endregion
         #region Positioners

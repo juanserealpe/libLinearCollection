@@ -248,6 +248,11 @@ namespace UnitTest_LinearCollection.Tests
             Assert.AreEqual(4, _instanceLinkedList.GoNext());
 
         }
+        [Test]
+        public void toSort_AsExpected()
+        {
+            
+        }
         #endregion
 
         #region Exception Handling

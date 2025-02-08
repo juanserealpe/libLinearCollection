@@ -71,7 +71,7 @@ namespace UnitTest_LinearCollection.Tests
         public void toSort()
         {
             toPushItems(30, 10, 20);
-            _instanceVectorStack.toSort();
+            _instanceVectorStack.QuickSort(0, _instanceVectorStack.attLength - 1);
             Assert.AreEqual(10, _instanceVectorStack.GoIndex(0));
             Assert.AreEqual(20, _instanceVectorStack.GoIndex(1));
             Assert.AreEqual(30, _instanceVectorStack.GoIndex(2));

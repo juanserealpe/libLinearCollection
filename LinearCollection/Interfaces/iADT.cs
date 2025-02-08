@@ -8,7 +8,7 @@ namespace Collections.Interfaces
 {
     public interface iADT<T> where T : IComparable<T>
     {
-        void toSort();
+        void QuickSort(int left, int right);
         void toClear();
         void toReverse();
     }

@@ -65,6 +65,22 @@ namespace Collections.ADT
             this.attCurrentItem = this.attArrayItems[prmPosition];
             this.attCurrentIndex = prmPosition;
         }
+        protected virtual int Partition(int left, int right)
+        {
+            T pivot = attArrayItems[right];
+            int i = left - 1;
+
+            for (int j = left; j < right; j++)
+            {
+                if (attArrayItems[j].CompareTo(pivot) <= 0)
+                {
+                    i++;
+                    (attArrayItems[i], attArrayItems[j]) = (attArrayItems[j], attArrayItems[i]);
+                }
+            }
+            (attArrayItems[i + 1], attArrayItems[right]) = (attArrayItems[right], attArrayItems[i + 1]);
+            return i + 1;
+        }
         #endregion
         #region PublicMethods
         public virtual void toRemoveByIndex(int prmPosition, ref T prmItem)
@@ -96,21 +112,13 @@ namespace Collections.ADT
                 }
             }
         }
-        public virtual void toSort()
+        public virtual void QuickSort(int left, int right)
         {
-            if (this.attLength <= 1) return;
-
-            for (int i = 0; i < this.attLength - 1; i++)
+            if (left < right)
             {
-                for (int j = 0; j < this.attLength - i - 1; j++)
-                {
-                    if (this.attArrayItems[j].CompareTo(this.attArrayItems[j + 1]) > 0)
-                    {
-                        T temp = this.attArrayItems[j];
-                        this.attArrayItems[j] = this.attArrayItems[j + 1];
-                        this.attArrayItems[j + 1] = temp;
-                    }
-                }
+                int pivotIndex = Partition(left, right);
+                QuickSort(left, pivotIndex - 1);  
+                QuickSort(pivotIndex + 1, right); 
             }
         }
         public virtual void toClear()

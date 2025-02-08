@@ -152,11 +152,13 @@ namespace UnitTest_LinearCollection.Tests
         [Test]
         public void toSort_AsExpected()
         {
-            AddItems(30, 10, 20);
-            _instanceVectorList.toSort();
-            Assert.AreEqual(10, _instanceVectorList.GoIndex(0));
-            Assert.AreEqual(20, _instanceVectorList.GoIndex(1));
-            Assert.AreEqual(30, _instanceVectorList.GoIndex(2));
+            AddItems(3,6,1,7,2,5,4);
+            _instanceVectorList.QuickSort(0, _instanceVectorList.attLength-1);
+            Assert.AreEqual(1, _instanceVectorList.GoIndex(0));
+            Assert.AreEqual(2, _instanceVectorList.GoIndex(1));
+            Assert.AreEqual(3, _instanceVectorList.GoIndex(2));
+            Assert.AreEqual(4, _instanceVectorList.GoIndex(3));
+            Assert.AreEqual(5, _instanceVectorList.GoIndex(4));
         }
         #endregion
         #region Exceptions
